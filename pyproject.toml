@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "vedicastrologer"
+version = "0.1.0"
+description = ""
+authors = ["aloks97 <alok@lanterne.ai>"]
+
+[tool.poetry.dependencies]
+python = "^3.7.1"
+beautifulsoup4 = "^4.9.3"
+selenium = "^3.141.0"
+pandas = "^1.2.4"
+requests = "^2.25.1"
+bs2json = "^0.0.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
