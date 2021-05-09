@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from astro_api_data_loader.astro_api_sdk import VRClient
+from data_loaders.astro_api_data_loader.astro_api_sdk import VRClient
 from data_loaders.utils import pretty_print_recommendations_decisions
 
 USER_ID = "616579"

@@ -20,8 +20,8 @@ class AstroChartDataCombiner:
 
 
 if __name__ == "__main__":
-    astro_sage_data = pd.read_csv("../astro_sage_data_loader/processed_astro_sage_data.csv")
-    astro_seek_data = pd.read_csv("../astro_seek_data_loader/processed_astro_seek_data.csv")
+    astro_sage_data = pd.read_csv("../data_loaders/astro_sage_data_loader/processed_astro_sage_data.csv")
+    astro_seek_data = pd.read_csv("../data_loaders/astro_seek_data_loader/processed_astro_seek_data.csv")
 
     astro_chart_data_dfs = [astro_sage_data, astro_seek_data]
     astro_chart_data_combiner = AstroChartDataCombiner(astro_chart_data_dfs)
