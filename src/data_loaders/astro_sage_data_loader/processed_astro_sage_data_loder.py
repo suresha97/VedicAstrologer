@@ -26,6 +26,8 @@ class ProcessedAstroSageDataLoader:
         rename_map = {
             old_col_name: old_col_name.lower().replace(" ", "_") for old_col_name in self._raw_astro_sage_data.columns
         }
+        rename_map["Longitude"] = "birth_longitude"
+        rename_map["Latitude"] = "birth_latitude"
         self._raw_astro_sage_data.rename(rename_map, axis="columns", inplace=True)
 
 if __name__ == "__main__":

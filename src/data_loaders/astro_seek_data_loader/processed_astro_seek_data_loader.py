@@ -33,7 +33,7 @@ class ProcessedAstroSeekDataLoader:
         cleaned_astro_seek_data["birth_minute"] = cleaned_astro_seek_data["Birth time - GMT"].apply(lambda x: x.split('-')[-1].split(':')[1])
         cleaned_astro_seek_data.drop(["Birth time - local", "Birth time - GMT"], axis=1, inplace=True)
 
-        cleaned_astro_seek_data["timezone"] = np.zeros(len(cleaned_astro_seek_data)).astype(int)
+        cleaned_astro_seek_data["time_zone"] = np.zeros(len(cleaned_astro_seek_data)).astype(int)
         cleaned_astro_seek_data.occupation = cleaned_astro_seek_data.occupation.map(lambda x: x[:-1])
         rename_map = {
             old_col_name: old_col_name.lower().replace(" ", "_") for old_col_name in cleaned_astro_seek_data.columns
