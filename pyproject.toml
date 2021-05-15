@@ -11,6 +11,7 @@ selenium = "^3.141.0"
 pandas = "^1.2.4"
 requests = "^2.25.1"
 bs2json = "^0.0.1"
+sklearn = "^0.0"
 
 [tool.poetry.dev-dependencies]
 

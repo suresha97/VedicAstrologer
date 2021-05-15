@@ -3,7 +3,7 @@ import time
 
 import pandas as pd
 
-from data_loaders.utils import get_beauiful_soup_object_from_base_url, pretty_print_recommendations_decisions
+from data_loaders.utils import get_beauiful_soup_object_from_base_url, pretty_print
 
 
 class AstroSeekWebScraper:

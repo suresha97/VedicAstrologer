@@ -1,7 +1,9 @@
+import datetime
+
 import pandas as pd
 
 
-class ProcessedAstroSageDataLoader:
+class ProcessedBirthChartLoader:
     def __init__(self, raw_astro_sage_data):
         self._raw_astro_sage_data = raw_astro_sage_data
 
@@ -16,6 +18,7 @@ class ProcessedAstroSageDataLoader:
         self._raw_astro_sage_data.dropna(inplace=True)
         self._raw_astro_sage_data["birth_day"] = self._raw_astro_sage_data["Date of Birth"].apply(lambda x: x.split(' ')[1][:-1])
         self._raw_astro_sage_data["birth_month"] = self._raw_astro_sage_data["Date of Birth"].apply(lambda x: x.split(' ')[0])
+        self._raw_astro_sage_data["birth_month"] = self._raw_astro_sage_data["birth_month"].apply(lambda x: self._convert_month_str_to_integer(x))
         self._raw_astro_sage_data["birth_year"] = self._raw_astro_sage_data["Date of Birth"].apply(lambda x: x.split(' ')[2])
 
         self._raw_astro_sage_data["birth_hour"] = self._raw_astro_sage_data["Time of Birth"].apply(lambda x: x.split(':')[0])
@@ -30,9 +33,18 @@ class ProcessedAstroSageDataLoader:
         rename_map["Latitude"] = "birth_latitude"
         self._raw_astro_sage_data.rename(rename_map, axis="columns", inplace=True)
 
+    def _convert_month_str_to_integer(self, month):
+        try:
+            month_int = datetime.datetime.strptime(month, "%B").month
+        except ValueError:
+            month_int = datetime.datetime.strptime(month, "%b").month
+
+
+        return month_int
+
 if __name__ == "__main__":
     raw_astro_sage_data = pd.read_csv("raw_astro_sage_chart_data.csv")
-    processed_astro_sage_data_loader = ProcessedAstroSageDataLoader(raw_astro_sage_data)
+    processed_astro_sage_data_loader = ProcessedBirthChartLoader(raw_astro_sage_data)
     processed_astro_sage_data = processed_astro_sage_data_loader.load_processed_astro_sage_data()
     processed_astro_sage_data.to_csv("processed_astro_sage_data.csv")
 

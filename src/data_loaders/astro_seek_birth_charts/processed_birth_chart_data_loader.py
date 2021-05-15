@@ -1,8 +1,10 @@
+import datetime
+
 import numpy as np
 import pandas as pd
 
 
-class ProcessedAstroSeekDataLoader:
+class ProcessedBirthChartLoader:
     def __init__(self, raw_astro_seek_data):
         self._raw_astro_seek_data = raw_astro_seek_data
 
@@ -27,6 +29,7 @@ class ProcessedAstroSeekDataLoader:
     def _process_cleaned_astro_seek_data(self, cleaned_astro_seek_data):
         cleaned_astro_seek_data["birth_day"] = cleaned_astro_seek_data["Birth time - GMT"].apply(lambda x: x.split(' ')[0])
         cleaned_astro_seek_data["birth_month"] = cleaned_astro_seek_data["Birth time - GMT"].apply(lambda x: x.split(' ')[1])
+        cleaned_astro_seek_data["birth_month"] = cleaned_astro_seek_data["birth_month"].apply(lambda x: self._convert_month_str_to_integer(x))
         cleaned_astro_seek_data["birth_year"] = cleaned_astro_seek_data["Birth time - GMT"].apply(lambda x: x.split(' ')[2])
 
         cleaned_astro_seek_data["birth_hour"] = cleaned_astro_seek_data["Birth time - GMT"].apply(lambda x: x.split('-')[-1].split(':')[0])
@@ -42,9 +45,19 @@ class ProcessedAstroSeekDataLoader:
 
         return cleaned_astro_seek_data
 
+    def _convert_month_str_to_integer(self, month):
+        try:
+            month_int = datetime.datetime.strptime(month, "%B").month
+        except ValueError:
+            month_int = datetime.datetime.strptime(month, "%b").month
+
+
+        return month_int
+
+
 if __name__ == "__main__":
     raw_astro_seek_data = pd.read_csv("raw_astro_seek_chart_data.csv")
-    processed_astro_seek_data_loader = ProcessedAstroSeekDataLoader(raw_astro_seek_data)
+    processed_astro_seek_data_loader = ProcessedBirthChartLoader(raw_astro_seek_data)
     processed_astro_seek_data = processed_astro_seek_data_loader.load_processed_astro_seek_data()
     processed_astro_seek_data.to_csv("processed_astro_seek_data.csv")
 

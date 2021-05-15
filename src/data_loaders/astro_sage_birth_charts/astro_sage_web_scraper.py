@@ -1,7 +1,7 @@
 import pandas as pd
 from bs2json import bs2json
 
-from data_loaders.utils import get_beauiful_soup_object_from_base_url, pretty_print_recommendations_decisions
+from data_loaders.utils import get_beauiful_soup_object_from_base_url, pretty_print
 
 
 class AstroSageWebScraper:
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     astro_sage_web_scraper = AstroSageWebScraper(astro_sage_base_url)
     raw_astro_chart_data = astro_sage_web_scraper.load_raw_astro_sage_data()
 
-    pretty_print_recommendations_decisions(raw_astro_chart_data)
+    pretty_print(raw_astro_chart_data)
 
     raw_astro_chart_data_df = pd.DataFrame(raw_astro_chart_data)
     print(raw_astro_chart_data_df.occupation.unique())

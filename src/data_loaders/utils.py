@@ -19,7 +19,7 @@ def get_beauiful_soup_object_from_base_url(base_url):
     return soup
 
 
-def pretty_print_recommendations_decisions(vehicle_rides):
+def pretty_print(vehicle_rides):
     def converter(obj):
         if isinstance(obj, (datetime.datetime, datetime.date)):
             return obj.isoformat()
