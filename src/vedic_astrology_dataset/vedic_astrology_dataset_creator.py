@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 
 
@@ -54,11 +56,13 @@ class ProcessedVedicAstrologyDatasetCreator:
             ).drop([feature], axis=1)
 
     def _encode_occupation_category(self):
-        occupation_categry_mapping = dict(
+        int_to_occupation_map = dict(
             enumerate(self._planetary_positons_and_occupation_data.occupation_category.astype("category").cat.categories)
         )
-        self._planetary_positons_and_occupation_data.replace({"occupation_category": occupation_categry_mapping}, inplace=True)
-        print(occupation_categry_mapping)
+        occupation_to_int_map = {v:k for k,v in int_to_occupation_map.items()}
+        self._planetary_positons_and_occupation_data.occupation_category.replace(occupation_to_int_map, inplace=True)
+        print("Mapping from occupation category to training label: ")
+        print(json.dumps(occupation_to_int_map, indent=2))
 
 
 if __name__ == "__main__":

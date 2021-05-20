@@ -1,32 +1,40 @@
 from abc import ABC, abstractmethod
 
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
+from sklearn.preprocessing import StandardScaler
 
 
 class Classifier(ABC):
-    def __init__(self, features, labels, test_set_proportion):
-        self._features = features
-        self._labels = labels
-        self._test_set_proportion = test_set_proportion
-        self._train_x, self._train_y, self._test_x, self._test_y = self._train_dev_test_split(
-            self._features, self._labels
-        )
-        self._model = self._instantiate_model()
+    def __init__(self, train_data, test_data, is_scaling_required):
+        self.train_x, self.train_y = train_data
+        self.test_x, self.test_y = test_data
+        self.model = self._instantiate_model()
+        self.is_sclaing_required = is_scaling_required
+
+        if self.is_sclaing_required:
+            self.train_x, self.test_x = self._scale_data()
+
 
     @abstractmethod
     def _instantiate_model(self, **kwargs):
         raise NotImplementedError()
 
-    def _train_dev_test_split(self, features, labels):
-        return train_test_split(features, labels, self._test_set_proportion)
+    def train(self):
+        self.model.fit(self.train_x, self.train_y)
 
-    def _train(self, train_x, train_y):
-        self._model.fit(train_x, train_y)
+    def get_predictions(self, test_x):
+        return self.model.predict(test_x)
 
-    def _get_predictions(self, test_x):
-        return self._model.predict(test_x)
+    def get_evaluation_metrics(self):
+        test_x_predictions = self.get_predictions(self.test_x)
+        print(classification_report(self.test_y, test_x_predictions))
 
-    def _get_evaluation_metrics(self, test_x, test_y):
-        test_x_predictions = self._get_predictions(test_x)
-        print(classification_report(test_y, test_x_predictions))
+    def train_and_evaluate_model(self):
+        self.train()
+        self.get_evaluation_metrics()
+
+    def _scale_data(self):
+        standard_scaler = StandardScaler()
+        standard_scaler.fit(self.train_x)
+
+        return standard_scaler.transform(self.train_x), standard_scaler.transform(self.test_x)

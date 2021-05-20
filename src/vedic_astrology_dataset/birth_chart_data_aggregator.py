@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     print(astro_sage_data.columns.unique())
     print(astro_seek_data.columns.unique())
-    astro_chart_data_dfs = [astro_sage_data, astro_seek_data]
+    astro_chart_data_dfs = [astro_seek_data]
     astro_chart_data_combiner = BirthChartDataAggregator(astro_chart_data_dfs)
 
     occupation_category_map = {
