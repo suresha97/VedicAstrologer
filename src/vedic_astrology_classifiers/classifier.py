@@ -14,7 +14,6 @@ class Classifier(ABC):
         if self.is_sclaing_required:
             self.train_x, self.test_x = self._scale_data()
 
-
     @abstractmethod
     def _instantiate_model(self, **kwargs):
         raise NotImplementedError()
