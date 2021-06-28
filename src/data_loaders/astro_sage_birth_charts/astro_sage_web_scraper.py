@@ -3,6 +3,7 @@ from bs2json import bs2json
 
 from data_loaders.utils import get_beauiful_soup_object_from_base_url, pretty_print
 
+DECLARE_SOMETHING = "test"
 
 class AstroSageWebScraper:
     def __init__(self, astro_sage_base_url):
