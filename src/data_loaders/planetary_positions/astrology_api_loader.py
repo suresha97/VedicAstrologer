@@ -1,10 +1,13 @@
+import os
+
 import pandas as pd
 
 from data_loaders.planetary_positions.astrology_api_sdk import VRClient
 
-USER_ID = "616579"
-API_KEY = "69f3de4bb75f5231aa8f7a6cfc016403"
+USER_ID = os.environ.get("USER_ID")
+API_KEY = os.environ.get("API_KEY")
 RESOURCE = "planets"
+
 
 class AstrologyAPILoader:
     def __init__(self, astro_chart_data):
