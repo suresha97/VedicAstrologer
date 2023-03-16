@@ -3,6 +3,9 @@ from sklearn.model_selection import train_test_split
 
 from vedic_astrology_dataset.vedic_astrology_dataset_creator import ProcessedVedicAstrologyDatasetCreator
 from vedic_astrology_classifiers.logitic_regression_classifier import LogisticRegressionClassifier
+from vedic_astrology_classifiers.random_forest_classifier import RandomForestClf
+from vedic_astrology_classifiers.svm_classifier import SVMClassifier
+from vedic_astrology_classifiers.xgboost_classifier import XGBoostClassifier
 from dimensionality_reduction.pca_transformer import PCATransformer
 from dimensionality_reduction.tsne_transformer import tSNETransformer
 
@@ -66,6 +69,47 @@ def train_and_evaluate_logistic_regression_classifier(train_data, test_data):
     LogisticRegressionClf = LogisticRegressionClassifier(train_data, test_data, hyperparameters, is_scaling_required=True)
     LogisticRegressionClf.train_and_evaluate_model()
 
+
+def train_and_evaluate_svm_classifier(train_data, test_data):
+    hyperparameters = {
+        "C": 8.0,
+        "kernel": "rbf",
+    }
+
+    SVMClf = SVMClassifier(train_data, test_data, hyperparameters, is_scaling_required=True)
+    SVMClf.train_and_evaluate_model()
+
+
+def train_and_evaluate_random_forest_classifier(train_data, test_data):
+    hyperparameters = {
+        "n_estimators": 1000,
+        "min_samples_split": 10,
+        "min_samples_leaf": 1,
+        "max_features": "auto",
+        "max_depth": 80,
+        "bootstrap": False
+    }
+
+    RandomForestClassifier = RandomForestClf(train_data, test_data, hyperparameters, is_scaling_required=False)
+    RandomForestClassifier.train_and_evaluate_model()
+
+
+def train_and_evaluate_xgboost_classifier(train_data, test_data):
+    hyperparameters = {
+        "max_depth": 10,
+        "learning_rate": 0.08,
+        "subsample": 0.85,
+        "gamma": 0.03,
+        "colsample_bytree": 0.8,
+        "reg_alpha": 0.0,
+        "reg_lambda": 1.5,
+        "min_child_weight": 5
+    }
+
+    XGBoostClf = XGBoostClassifier(train_data, test_data, hyperparameters, is_scaling_required=False)
+    XGBoostClf.train_and_evaluate_model()
+
+
 def plot_feature_importance(model, features):
     model.plot_featuere_importance(list(features.columns))
 
@@ -85,10 +129,10 @@ if __name__ == "__main__":
         vedic_astrology_test_x,
         number_of_componenets=50
     )
-    #plot_pca_components(vedic_astrology_train_x, vedic_astrology_train_y, 3, three_D=True)
+    plot_pca_components(vedic_astrology_train_x, vedic_astrology_train_y, 3, three_D=True)
 
-    #plot_tsne_projections(vedic_astrology_train_x, vedic_astrology_train_y)
+    plot_tsne_projections(vedic_astrology_train_x, vedic_astrology_train_y)
 
     vedic_astrology_train_data = (vedic_astrology_train_x, vedic_astrology_train_y)
     vedic_astrology_test_data = (vedic_astrology_test_x, vedic_astrology_test_y)
-    #train_and_evaluate_logistic_regression_classifier(vedic_astrology_train_data, vedic_astrology_test_data)
+    train_and_evaluate_logistic_regression_classifier(vedic_astrology_train_data, vedic_astrology_test_data)
