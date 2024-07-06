@@ -2,6 +2,7 @@ import datetime
 
 import pandas as pd
 
+third_decalre = 3434343
 
 class ProcessedBirthChartLoader:
     def __init__(self, raw_astro_sage_data):
